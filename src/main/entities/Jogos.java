@@ -1,5 +1,5 @@
 package main.entities;
-// Generated 27/jul/2016 15:03:10 by Hibernate Tools 5.1.0.Alpha1
+// Generated 27/jul/2016 16:01:44 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.Date;
 import javax.persistence.AttributeOverride;
@@ -27,6 +27,7 @@ public class Jogos implements java.io.Serializable {
 	private String estado;
 	private Date dcria;
 	private Date daltera;
+	private String competicao;
 
 	public Jogos() {
 	}
@@ -36,7 +37,7 @@ public class Jogos implements java.io.Serializable {
 	}
 
 	public Jogos(JogosId id, Integer golos1, Integer golos2, Double odds1, Double oddsx, Double odds2, String estado,
-			Date dcria, Date daltera) {
+			Date dcria, Date daltera, String competicao) {
 		this.id = id;
 		this.golos1 = golos1;
 		this.golos2 = golos2;
@@ -46,6 +47,7 @@ public class Jogos implements java.io.Serializable {
 		this.estado = estado;
 		this.dcria = dcria;
 		this.daltera = daltera;
+		this.competicao = competicao;
 	}
 
 	@EmbeddedId
@@ -134,6 +136,15 @@ public class Jogos implements java.io.Serializable {
 
 	public void setDaltera(Date daltera) {
 		this.daltera = daltera;
+	}
+
+	@Column(name = "competicao", length = 45)
+	public String getCompeticao() {
+		return this.competicao;
+	}
+
+	public void setCompeticao(String competicao) {
+		this.competicao = competicao;
 	}
 
 }

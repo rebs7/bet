@@ -1,5 +1,5 @@
 package main.entities;
-// Generated 27/jul/2016 15:03:10 by Hibernate Tools 5.1.0.Alpha1
+// Generated 27/jul/2016 16:01:44 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -16,7 +16,6 @@ import javax.persistence.TemporalType;
 @Table(name = "equipas", catalog = "betting")
 public class Equipas implements java.io.Serializable {
 
-	private int id;
 	private String nome;
 	private Date dcria;
 	private Date daltera;
@@ -24,12 +23,11 @@ public class Equipas implements java.io.Serializable {
 	public Equipas() {
 	}
 
-	public Equipas(int id) {
-		this.id = id;
+	public Equipas(String nome) {
+		this.nome = nome;
 	}
 
-	public Equipas(int id, String nome, Date dcria, Date daltera) {
-		this.id = id;
+	public Equipas(String nome, Date dcria, Date daltera) {
 		this.nome = nome;
 		this.dcria = dcria;
 		this.daltera = daltera;
@@ -37,16 +35,7 @@ public class Equipas implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	@Column(name = "nome", length = 45)
+	@Column(name = "nome", unique = true, nullable = false, length = 45)
 	public String getNome() {
 		return this.nome;
 	}
