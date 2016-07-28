@@ -37,8 +37,8 @@ public class FootballCSV implements Runnable {
 				int endSeason = StartSeason + 1;
 				String season = Integer.toString(StartSeason).substring(2) + Integer.toString(endSeason).substring(2);
 
-				System.out.println(season);
-				this.unpackArchive(new URL(baseUrl.replace("#####", season)), folder, season);
+			//	System.out.println(season);
+			//	this.unpackArchive(new URL(baseUrl.replace("#####", season)), folder, season);
 
 			}
 			parseCSV(folderText, this.listFilesForFolder(folder));
@@ -157,12 +157,14 @@ public class FootballCSV implements Runnable {
 
 							if (!equipaA.exists()) {
 								equipaA.add();
+								
 							}
 							if (!equipaH.exists()) {
 								equipaH.add();
 							}
 							if (!jogo.exists()) {
 								jogo.add();
+								jogo.updateState();
 							}
 						}
 					}

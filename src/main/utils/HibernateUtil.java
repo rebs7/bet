@@ -13,10 +13,11 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
-            return new  AnnotationConfiguration().configure().buildSessionFactory();
+     //       return new  AnnotationConfiguration().configure().buildSessionFactory();
+            return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
+           System.out.println(ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

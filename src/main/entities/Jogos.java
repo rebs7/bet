@@ -172,6 +172,7 @@ public class Jogos implements java.io.Serializable {
 	         tx = session.beginTransaction();
 	         this.setDcria(new Date());
 	         session.save(this);
+	         System.out.println("ADD GAME ");
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -215,7 +216,7 @@ public class Jogos implements java.io.Serializable {
 		return false;
 	   }
 
-public Jogos getFromDB(){
+public Jogos fromDB(){
 	
 	
 	Session session = HibernateUtil.getSessionFactory().openSession();	 
@@ -239,14 +240,17 @@ public void updateState(){
 	this.setEstado("PRV");
 	if(this.id.getCasa()!=null && this.id.getFora()!=null && this.getId().getData()!=null && !this.getId().getData().isEmpty() ){
 		this.setEstado("CONF");
-		if(this.getOdds1()!=null && this.getOddsx()!=null && this.getOdds2()!= null){}
+		if(this.getOdds1()!=null && this.getOddsx()!=null && this.getOdds2()!= null){
+			this.setEstado("APOST");
+		}
 		if(this.golos1 !=null && this.golos2 !=null){
-			this.setEstado("TERMINADO");
+			this.setEstado("TRMND");
+			
 			
 			
 		} 
 	}
-			
+		this.update();	
 	}
 	
 	

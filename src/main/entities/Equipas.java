@@ -119,5 +119,39 @@ public class Equipas implements java.io.Serializable {
 	      }
 		return false;
 	   }
+	 public void update(){
+		 Session session = HibernateUtil.getSessionFactory().openSession();	
+	      Transaction tx = null;
+	      try{
+	         tx = session.beginTransaction();
+	      this.setDaltera(new Date());
+			 session.update(this); 
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+	   }
+	 public Equipas fromDB(){
+			
+			
+			Session session = HibernateUtil.getSessionFactory().openSession();	 
+		    try{
+		    
+		       Equipas equipa =   (Equipas)session.get(Equipas.class, this.getNome()); 
+		       
+		       if(equipa != null){
+		      	 return equipa;
+		       }else return null;
+		    }catch (HibernateException e) {
+		       
+		       e.printStackTrace(); 
+		    }finally {
+		       session.close(); 
+		    }
+			return null;
+		 }
 
 }
