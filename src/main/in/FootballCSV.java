@@ -146,7 +146,15 @@ public class FootballCSV implements Runnable {
 						
 							Equipas equipaH = new Equipas(array[2], null, null, array[0]);
 							Equipas equipaA = new Equipas(array[3], null, null, array[0]);
-							Jogos jogo = new Jogos(new JogosId(equipaH.getNome(), equipaA.getNome(), array[1]));
+							String[] data= array[1].split("/");
+							String dataFormatada="";
+							if(Integer.parseInt(data[2]) <90){
+								dataFormatada="20"+data[2]+"-"+data[1]+"-"+data[0];
+							}else{
+								
+								dataFormatada="19"+data[2]+"-"+data[1]+"-"+data[0];
+							}
+							Jogos jogo = new Jogos(new JogosId(equipaH.getNome(), equipaA.getNome(), dataFormatada));
 							jogo.setCompeticao(array[0]);
 							jogo.setGolos1(Integer.parseInt(array[4]));
 							jogo.setGolos2(Integer.parseInt(array[5]));

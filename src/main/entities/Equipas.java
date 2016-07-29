@@ -91,6 +91,7 @@ public class Equipas implements java.io.Serializable {
 	         
 	         session.save(this);
 	         tx.commit();
+	         System.out.println("Equipa Adicionada -> "+this.toString());
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
 	         e.printStackTrace(); 
@@ -127,6 +128,8 @@ public class Equipas implements java.io.Serializable {
 	      this.setDaltera(new Date());
 			 session.update(this); 
 	         tx.commit();
+			  System.out.println("Equipa Atualizada -> "+this.toString());
+
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
 	         e.printStackTrace(); 
@@ -153,5 +156,10 @@ public class Equipas implements java.io.Serializable {
 		    }
 			return null;
 		 }
+	 @Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getNome()+" " +this.getPais();
+	}
 
 }

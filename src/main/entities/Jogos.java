@@ -172,7 +172,7 @@ public class Jogos implements java.io.Serializable {
 	         tx = session.beginTransaction();
 	         this.setDcria(new Date());
 	         session.save(this);
-	         System.out.println("ADD GAME ");
+	         System.out.println("Jogo Adicionado -> "+this.toString());
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -190,6 +190,7 @@ public class Jogos implements java.io.Serializable {
 	         tx = session.beginTransaction();
 	      this.setDaltera(new Date());
 			 session.update(this); 
+			  System.out.println("Jogo Atualizado -> "+this.toString());
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -253,7 +254,11 @@ public void updateState(){
 		this.update();	
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getId().getCasa()+" - "+this.getId().getFora();
+	}
 	
 }	
 	
