@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import main.entities.Equipas;
 import main.entities.Jogos;
 import main.entities.JogosId;
+import main.utils.Utils;
 
 public class ZeroZeroNextGames implements Runnable {
 
@@ -37,14 +38,15 @@ public class ZeroZeroNextGames implements Runnable {
 				Jogos jogo = new Jogos(	new JogosId(equipaH.getNome(), equipaA.getNome(), element.getElementsByTag("td").eq(1).text()));
 				jogo.setDataReal(date);
 				if (!element.getElementsByTag("td").eq(7).text().isEmpty()) {
-					jogo.setCompeticao(element.getElementsByTag("td").eq(7).text().replace("2016/2017","").replace("2016/17", "").replace("16/17", "").replace("2016", "").replace("16", ""));
-				}
+					jogo.setCompeticao(Utils.competitionsFilter(element.getElementsByTag("td").eq(7).text()));
+					}
 				if (!element.getElementsByTag("td").eq(8).text().isEmpty()) {
 					jogo.setOdds1(Double.parseDouble(element.getElementsByTag("td").eq(8).text()));
 					jogo.setOddsx(Double.parseDouble(element.getElementsByTag("td").eq(9).text()));
 					jogo.setOdds2(Double.parseDouble(element.getElementsByTag("td").eq(10).text()));
 
 				}
+				if(jogo.getCompeticao()!=null){
 				if (!equipaA.exists()) {
 					equipaA.add();
 					
@@ -53,12 +55,14 @@ public class ZeroZeroNextGames implements Runnable {
 					equipaH.add();
 				}
 				if (!jogo.exists()) {
+					jogo.setEstado();
 					jogo.add();
-					jogo.updateState();
+				
 				}else{
-					jogo.updateState();
+					jogo.update();
+					
 				}
-			}
+			}}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -52,7 +52,7 @@ public class Equipas implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dcria", length = 10)
 	public Date getDcria() {
 		return this.dcria;
@@ -62,7 +62,7 @@ public class Equipas implements java.io.Serializable {
 		this.dcria = dcria;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "daltera", length = 10)
 	public Date getDaltera() {
 		return this.daltera;

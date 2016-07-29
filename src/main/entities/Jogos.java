@@ -1,6 +1,7 @@
 package main.entities;
 // Generated 27/jul/2016 16:01:44 by Hibernate Tools 5.1.0.Alpha1
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -126,7 +127,7 @@ public class Jogos implements java.io.Serializable {
 		this.estado = estado;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dcria", length = 10)
 	public Date getDcria() {
 		return this.dcria;
@@ -136,7 +137,7 @@ public class Jogos implements java.io.Serializable {
 		this.dcria = dcria;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "daltera", length = 10)
 	public Date getDaltera() {
 		return this.daltera;
@@ -184,12 +185,26 @@ public class Jogos implements java.io.Serializable {
 	     
 	   }
 	 public void update(){
+		 Jogos jogo = this.fromDB();
+		 String initial = jogo.getEstado();
+		 jogo.setDataReal(this.dataReal);
+		 jogo.setGolos1(this.golos1);
+		 jogo.setGolos2(this.golos2);
+		 jogo.setOdds1(this.odds1);
+		 jogo.setOddsx(this.oddsx);
+		 jogo.setOdds2(this.odds2);
+		 jogo.setEstado();
+		 if(!jogo.getEstado().equals(initial)){
+			 System.out.println(initial+"->"+jogo.getEstado());
+		 jogo.setDaltera(new Date());}
+		
 		 Session session = HibernateUtil.getSessionFactory().openSession();	
 	      Transaction tx = null;
 	      try{
 	         tx = session.beginTransaction();
-	      this.setDaltera(new Date());
-			 session.update(this); 
+	         
+	    
+			 session.update(jogo); 
 			  System.out.println("Jogo Atualizado -> "+this.toString());
 	         tx.commit();
 	      }catch (HibernateException e) {
@@ -237,7 +252,7 @@ public Jogos fromDB(){
 	return null;
  }
 	
-public void updateState(){
+public void setEstado(){
 	this.setEstado("PRV");
 	if(this.id.getCasa()!=null && this.id.getFora()!=null && this.getId().getData()!=null && !this.getId().getData().isEmpty() ){
 		this.setEstado("CONF");
@@ -249,9 +264,7 @@ public void updateState(){
 			
 			
 			
-		} 
-	}
-		this.update();	
+		} }
 	}
 	
 	@Override

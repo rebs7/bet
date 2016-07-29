@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import main.entities.Equipas;
 import main.entities.Jogos;
 import main.entities.JogosId;
+import main.utils.Utils;
 
 public class ZeroZeroLastResults implements Runnable {
 
@@ -42,9 +43,9 @@ public class ZeroZeroLastResults implements Runnable {
 				jogo.setGolos2(Integer.parseInt(resultado[0]));
 				
 				if (!element.getElementsByTag("td").eq(7).text().isEmpty()) {
-					jogo.setCompeticao(element.getElementsByTag("td").eq(7).text().replace("2016/2017","").replace("2016/17", "").replace("16/17", "").replace("2016", "").replace("16", ""));
+					jogo.setCompeticao(Utils.competitionsFilter(element.getElementsByTag("td").eq(7).text()));
 				}
-				
+				if(jogo.getCompeticao()!=null){
 				if (!equipaA.exists()) {
 					equipaA.add();
 					
@@ -53,11 +54,13 @@ public class ZeroZeroLastResults implements Runnable {
 					equipaH.add();
 				}
 				if (!jogo.exists()) {
+					jogo.setEstado();
 					jogo.add();
-					jogo.updateState();
+				
 				}else{
-					jogo.updateState();
-				}
+					jogo.update();
+					
+				}}
 			}
 
 		} catch (Exception e) {

@@ -148,11 +148,14 @@ public class FootballCSV implements Runnable {
 							Equipas equipaA = new Equipas(array[3], null, null, array[0]);
 							String[] data= array[1].split("/");
 							String dataFormatada="";
+							if(data[2].length() <=2){
 							if(Integer.parseInt(data[2]) <90){
 								dataFormatada="20"+data[2]+"-"+data[1]+"-"+data[0];
 							}else{
 								
 								dataFormatada="19"+data[2]+"-"+data[1]+"-"+data[0];
+							}}else{
+								dataFormatada=data[2]+"-"+data[1]+"-"+data[0];
 							}
 							Jogos jogo = new Jogos(new JogosId(equipaH.getNome(), equipaA.getNome(), dataFormatada));
 							jogo.setCompeticao(array[0]);
@@ -171,8 +174,11 @@ public class FootballCSV implements Runnable {
 								equipaH.add();
 							}
 							if (!jogo.exists()) {
+								jogo.setEstado();
 								jogo.add();
-								jogo.updateState();
+								
+							}else{
+								jogo.update();
 							}
 						}
 					}
