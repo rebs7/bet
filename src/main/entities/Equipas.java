@@ -2,6 +2,7 @@ package main.entities;
 // Generated 27/jul/2016 16:01:44 by Hibernate Tools 5.1.0.Alpha1
 
 import java.util.Date;
+import java.util.List; 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -120,6 +122,21 @@ public class Equipas implements java.io.Serializable {
 	      }
 		return false;
 	   }
+	 public static List <Equipas> listAll(){
+		 Session session = HibernateUtil.getSessionFactory().openSession();	
+	      Transaction tx = null;
+	      try{
+	         tx = session.beginTransaction();
+	         List equipas = session.createQuery("FROM Equipas").list(); 
+return  equipas;
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+	   return null;
+	 }
 	 public void update(){
 		 Session session = HibernateUtil.getSessionFactory().openSession();	
 	      Transaction tx = null;
@@ -156,6 +173,7 @@ public class Equipas implements java.io.Serializable {
 		    }
 			return null;
 		 }
+	 
 	 @Override
 	public String toString() {
 		// TODO Auto-generated method stub

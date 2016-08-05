@@ -5,8 +5,10 @@ import java.util.ArrayList;
 public class Utils {
 
 	
-	
-	
+	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	  public static final String DB_URL = "jdbc:mysql://localhost/betting";
+	 public static final String USER = "root";
+	  public static final String PASS = "mysql";
 	
 	public static String competitionsFilter(String competitons){
 		

@@ -3,6 +3,8 @@ package main.entities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -267,6 +270,24 @@ public void setEstado(){
 		} }
 	}
 	
+public static List<String> getCompetitions(){
+	 Session session = HibernateUtil.getSessionFactory().openSession();	
+ try{
+	    
+	 
+		 String hql = "select distinct(competicao) from Jogos";
+	    	Query query = session.createQuery(hql);
+	    
+	    	List results = query.list();
+	    	return results;
+   }catch (Exception e) {
+      
+      e.printStackTrace(); 
+   }finally {
+      session.close(); 
+   }
+	return null;
+}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
