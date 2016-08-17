@@ -30,21 +30,21 @@ public class LevenshteinDistance {
     }
     public static void main(String[] args) {
     List<Equipas> equipas = Equipas.listAll();
-    String a = "Sporting";
-    String b="Sp Lisbon";
-  /*  for (int i = 0; i < equipas.size(); i++) {
+    String a = "";
+    String b="";
+   for (int i = 0; i < equipas.size(); i++) {
     	a=equipas.get(i).getNome();
     	for (int j = i+1; j < equipas.size(); j++) {
     		b=equipas.get(j).getNome();
     		double levDis = computeLevenshteinDistance(a, b);
 			double bigger = Math.max(a.length(),b.length());
 			double pct = ((bigger - levDis) / bigger)*100;
-			if(pct>40){
+			if(pct>60){
 				System.out.println(a + "   "+b+"  "+ pct);
 			}
 		}
-		
-	}*/
+	
+	}
     double levDis = computeLevenshteinDistance(a, b);
 	double bigger = Math.max(a.length(),b.length());
 	double pct = ((bigger - levDis) / bigger)*100;

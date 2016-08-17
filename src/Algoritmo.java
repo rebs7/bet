@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -21,10 +22,16 @@ public class Algoritmo implements  Runnable {
 			if(history.getCasaAtaque()==0 || history.getForaAtaque()==0){
 				continue;
 			}
-			System.out.println("INICIANDO O ALGORITMO PARA -> "+history.getJogo().toString() );
-			double casa = history.getCasaAtaque()*history.getForaDefesa();
-			double fora = history.getForaAtaque()*history.getCasaDefesa();
-			System.out.println(casa+" - " +fora);
+		//	System.out.println("INICIANDO O ALGORITMO PARA -> "+history.getJogo().toString() );
+			double casa = (history.getCasaAtaque()*0.60+history.getForaDefesa()*0.40);
+			double fora = (history.getForaAtaque()*0.60+history.getCasaDefesa()*0.40);
+			
+			//System.out.println(casa+" - " +fora);
+			
+			calculate(casa, fora,history);
+			
+			
+			
 		}
 		
 		
@@ -39,7 +46,54 @@ public class Algoritmo implements  Runnable {
 		
 		
 	}
+public void calculate(double casa,double fora, History history){
+	HashMap<Integer, Double> casalist = new HashMap<>();
+	HashMap<Integer, Double> foralist = new HashMap<>();
+double home=0.0;
+double tie=0.0;
+double away=0.0;
+	for (int i = 0; i < 7; i++) {
+		casalist.put(i, poisson(casa, i));
+	//	System.out.println("PROB CASA= "+i+" ->"+casalist.get(i));
+		foralist.put(i, poisson(fora, i));
+		//System.out.println("PROB FORA= "+i+" ->"+foralist.get(i));
+		
+	}
 
+	for (int i = 0; i <7; i++) {
+		for (int j = 0; j < 7; j++) {
+			double probCasa=casalist.get(i);
+			double probFora=foralist.get(j);
+			if(i==j){//empate
+				
+				tie=tie+ (probCasa*probFora);
+			}else if(i>j){//Casa
+				home=home+(probCasa*probFora);
+			}else{//Fora
+				away+=(probCasa*probFora);
+			}
+			
+		}
+	}
+	
+System.out.println(history.getJogo().toString());
+System.out.println("PROB CASA");
+System.out.println(home*100);
+System.out.println(1/history.getJogo().getOdds1()*100);
+System.out.println("ODDS-> "+history.getJogo().getOdds1());
+
+System.out.println("PROB EMPATE" );
+System.out.println(tie*100);
+System.out.println(1/history.getJogo().getOddsx()*100);	
+System.out.println("ODDS-> "+history.getJogo().getOddsx());
+
+System.out.println("PROB FORA");
+System.out.println(away*100);
+System.out.println(1/history.getJogo().getOdds2()*100);	
+System.out.println("ODDS-> "+history.getJogo().getOdds2());
+
+System.out.println("-------------------------------------------------------------------------------");
+}
 
 	public  static ArrayList<History> getActualHistory(){
 		
@@ -48,6 +102,7 @@ public class Algoritmo implements  Runnable {
 	      try{
 	         tx = session.beginTransaction();
 	         ArrayList<History> lista= new ArrayList<>();  
+	       
 	         List jogos = session.createQuery("FROM Jogos where estado = 'APOST' and datareal> now() ").list(); 
 for (Object object : jogos) {
 	lista.add(new History((Jogos) object));
@@ -64,7 +119,7 @@ return lista;
 	 }
 		
 	public static void main(String[] args) {
-		//new Algoritmo().run();
+		new Algoritmo().run();
 	/*
 		double casa = 1.429;
 		double fora = 1.022;
@@ -78,10 +133,10 @@ return lista;
 	*/
 
 	}
-	public double poisson(double media , int golos){
-		return Math.pow(2.71828, -media)*Math.pow(media, golos)*100/factorial(golos);
+	public static double poisson(double media , int golos){
+		return Math.pow(2.71828, -media)*Math.pow(media, golos)/factorial(golos);
 	}
-	public int factorial( int x){
+	public static int factorial( int x){
 		int fact = 1;
 		
 		 if ( x < 0 )

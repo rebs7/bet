@@ -20,7 +20,7 @@ public class ZeroZeroNextGames implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Document doc = Jsoup.connect("http://www.zerozero.pt/proximos_jogos.php").get();
+			Document doc = Jsoup.connect("http://www.zerozero.pt/proximos_jogos.php?laranja=1").get();
 			Elements parent = doc.getElementsByClass("parent");
 			SimpleDateFormat formatter = null;
 			Date date = null;

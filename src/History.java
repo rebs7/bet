@@ -15,10 +15,10 @@ public class History {
 	public History(Jogos jogo) {
 		super();
 		this.jogo = jogo;
-		System.out.println("CALCULANDO CASA-> "+jogo.getId().getCasa() );
+		//System.out.println("CALCULANDO CASA-> "+jogo.getId().getCasa() );
 		this.casaAtaque=initCasaAtaque();	
 		this.casaDefesa=initCasaDefesa();
-		System.out.println("CALCULANDO FORA-> "+jogo.getId().getFora() );
+		//System.out.println("CALCULANDO FORA-> "+jogo.getId().getFora() );
 		this.foraAtaque=initForaAtaque();
 		this.foraDefesa=initForaDefesa();
 		}
@@ -163,7 +163,7 @@ public class History {
 		
 
 		}
-		System.out.println(casaAtaque);
+	//	System.out.println(casaAtaque);
 		return casaAtaque;
 
 	}
@@ -306,7 +306,7 @@ public class History {
 			}
 			
 
-		}System.out.println(casaDefesa);
+		}//System.out.println(casaDefesa);
 		return casaDefesa;
 
 	}
@@ -450,7 +450,7 @@ public class History {
 		
 
 		}
-		System.out.println(foraAtaque);
+		//System.out.println(foraAtaque);
 		return foraAtaque;
 
 	}
@@ -593,7 +593,7 @@ public class History {
 			}
 			
 
-		}System.out.println(foraDefesa);
+		}//System.out.println(foraDefesa);
 		return foraDefesa;
 
 	}

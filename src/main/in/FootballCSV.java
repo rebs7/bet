@@ -23,6 +23,7 @@ import java.util.zip.ZipFile;
 import main.entities.Equipas;
 import main.entities.Jogos;
 import main.entities.JogosId;
+import main.utils.Utils;
 
 public class FootballCSV implements Runnable {
 
@@ -32,7 +33,7 @@ public class FootballCSV implements Runnable {
 			String baseUrl = "http://www.football-data.co.uk/mmz4281/#####/data.zip";
 			File folder = new File(folderText);
 
-			for (int StartSeason = 1993; StartSeason < 2016; StartSeason++) {
+			for (int StartSeason = 2000; StartSeason < 2016; StartSeason++) {
 
 				int endSeason = StartSeason + 1;
 				String season = Integer.toString(StartSeason).substring(2) + Integer.toString(endSeason).substring(2);
@@ -158,14 +159,14 @@ public class FootballCSV implements Runnable {
 								dataFormatada=data[2]+"-"+data[1]+"-"+data[0];
 							}
 							Jogos jogo = new Jogos(new JogosId(equipaH.getNome(), equipaA.getNome(), dataFormatada));
-							jogo.setCompeticao(array[0]);
+							jogo.setCompeticao(Utils.competitionsFilter(array[0]));
 							jogo.setGolos1(Integer.parseInt(array[4]));
 							jogo.setGolos2(Integer.parseInt(array[5]));
 							SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 							Date date = formatter.parse(array[1]);
 							jogo.setDataReal(date);
 							
-
+							if(jogo.getCompeticao() != null){
 							if (!equipaA.exists()) {
 								equipaA.add();
 								
@@ -179,6 +180,7 @@ public class FootballCSV implements Runnable {
 								
 							}else{
 								jogo.update();
+							}
 							}
 						}
 					}
