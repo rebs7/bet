@@ -42,8 +42,7 @@ public class ZeroZeroLastResults implements Runnable {
 				jogo.setGolos1(Integer.parseInt(resultado[0]));
 				jogo.setGolos2(Integer.parseInt(resultado[0]));
 				
-				if (!element.getElementsByTag("td").eq(7).text().isEmpty()) {
-					jogo.setCompeticao(Utils.competitionsFilter(element.getElementsByTag("td").eq(7).text()));
+				if (!element.getElementsByTag("td").eq(7).text().isEmpty()) {					jogo.setCompeticao(Utils.competitionsFilter(element.getElementsByTag("td").eq(7).text()));
 				}
 				if(jogo.getCompeticao()!=null){
 				if (!equipaA.exists()) {

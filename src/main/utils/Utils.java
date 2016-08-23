@@ -30,37 +30,37 @@ public class Utils {
 			competitons=competitons.replace(toReplace.get(i), "");
 			}
 		ArrayList<String> comptlList = new ArrayList<>();
-			comptlList.add("B1");
+	//		comptlList.add("B1");
 			comptlList.add("Jupiler Pro League");
 			
-			comptlList.add("D1");
+	//		comptlList.add("D1");
 			comptlList.add("1. Bundesliga");
 			
-			comptlList.add("E0");
+	//		comptlList.add("E0");
 			comptlList.add("Premier League");
 			
-			comptlList.add("F1");
+	//		comptlList.add("F1");
 			comptlList.add("Ligue 1");
 			
-			comptlList.add("G1");
+	//		comptlList.add("G1");
 			comptlList.add("Ethniki Katigoria");
 
-			comptlList.add("I1");
+	//		comptlList.add("I1");
 			comptlList.add("Serie A");
 
-			comptlList.add("N1");
+	//		comptlList.add("N1");
 			comptlList.add("Holland");
 
-			comptlList.add("P1");
+	//		comptlList.add("P1");
 			comptlList.add("Liga NOS");
 
-			comptlList.add("SC0");
+	//		comptlList.add("SC0");
 			comptlList.add("Scott. PL");
 
-			comptlList.add("T1");
+	//		comptlList.add("T1");
 			comptlList.add("Süper Lig");
 			 
-		
+			comptlList.add("Liga BBVA");
 			
 	
 		
