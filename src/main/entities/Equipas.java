@@ -174,6 +174,25 @@ return  equipas;
 			return null;
 		 }
 	 
+	 public static List<Equipas> getEquipas(){
+		 Session session = HibernateUtil.getSessionFactory().openSession();	
+	 try{
+		    
+		 
+			 String hql = "select nome from Equipas";
+		    	Query query = session.createQuery(hql);
+		    
+		    	List results = query.list();
+		    	return results;
+	   }catch (Exception e) {
+	      
+	      e.printStackTrace(); 
+	   }finally {
+	      session.close(); 
+	   }
+		return null;
+	}
+	 
 	 @Override
 	public String toString() {
 		// TODO Auto-generated method stub

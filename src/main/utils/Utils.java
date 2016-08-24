@@ -16,7 +16,7 @@ public class Utils {
 		
 		
 	
-		
+	
 		ArrayList<String> toReplace = new ArrayList<>();
 		toReplace.add("2015/2016");
 		toReplace.add("2016/2017");
@@ -65,8 +65,9 @@ public class Utils {
 	
 		
 		for (int i = 0; i < comptlList.size(); i++) {
-			if(competitons.contains(comptlList.get(i))){
-				return competitons;
+			if(competitons.trim().equals(comptlList.get(i))){
+				System.out.println(competitons.trim());	
+				return competitons.trim();
 			}
 		}
 		return null;
