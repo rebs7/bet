@@ -46,6 +46,8 @@ public class ZeroZeroNextGames implements Runnable {
 					jogo.setOdds2(Double.parseDouble(element.getElementsByTag("td").eq(10).text()));
 
 				}
+				equipaA.setUser("ZZ");
+				equipaH.setUser("ZZ");
 				if(jogo.getCompeticao()!=null){
 				if (!equipaA.exists()) {
 					equipaA.add();

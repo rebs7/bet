@@ -44,6 +44,8 @@ public class ZeroZeroLastResults implements Runnable {
 				
 				if (!element.getElementsByTag("td").eq(7).text().isEmpty()) {					jogo.setCompeticao(Utils.competitionsFilter(element.getElementsByTag("td").eq(7).text()));
 				}
+				equipaA.setUser("ZZ");
+				equipaH.setUser("ZZ");
 				if(jogo.getCompeticao()!=null){
 				if (!equipaA.exists()) {
 					equipaA.add();

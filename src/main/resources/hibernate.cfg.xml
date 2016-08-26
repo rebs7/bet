@@ -9,7 +9,9 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/betting</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+<property name="hibernate.cache.use_query_cache">false</property>
+<property name="hibernate.c3p0.max_statements">0</property>
         <mapping class="main.entities.Equipas" />
         <mapping class="main.entities.Jogos" />
     </session-factory>
