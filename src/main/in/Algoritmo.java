@@ -1,3 +1,4 @@
+package main.in;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,12 +11,32 @@ import org.hibernate.Transaction;
 import main.entities.Jogos;
 import main.utils.HibernateUtil;
 
-public class Algoritmo implements  Runnable {
+public class Algoritmo  {
 
-	
-	public void run() {
+	History history;
+	double probCasa;
+	double probx;
+	double probFora;
+/*	System.out.println(history.getJogo().toString());
+	System.out.println("PROB CASA");
+	System.out.println(home*100);
+	System.out.println(1/history.getJogo().getOdds1()*100);
+	System.out.println("ODDS-> "+history.getJogo().getOdds1());
+
+	System.out.println("PROB EMPATE" );
+	System.out.println(tie*100);
+	System.out.println(1/history.getJogo().getOddsx()*100);	
+	System.out.println("ODDS-> "+history.getJogo().getOddsx());
+
+	System.out.println("PROB FORA");
+	System.out.println(away*100);
+	System.out.println(1/history.getJogo().getOdds2()*100);	
+	System.out.println("ODDS-> "+history.getJogo().getOdds2());
+	*/
+	public static List<Algoritmo> getList() {
 		
 		List<History> historicoLista = getActualHistory();
+		List<Algoritmo> histAlgoritmo = new ArrayList<>();
 		
 		
 		for (History history : historicoLista) {
@@ -28,12 +49,13 @@ public class Algoritmo implements  Runnable {
 			
 			//System.out.println(casa+" - " +fora);
 			
-			calculate(casa, fora,history);
+			histAlgoritmo.add(calculate(casa, fora,history));
 			
 			
 			
 		}
 		
+		return histAlgoritmo;
 		
 		
 		
@@ -46,7 +68,7 @@ public class Algoritmo implements  Runnable {
 		
 		
 	}
-public void calculate(double casa,double fora, History history){
+public static Algoritmo calculate(double casa,double fora, History history){
 	HashMap<Integer, Double> casalist = new HashMap<>();
 	HashMap<Integer, Double> foralist = new HashMap<>();
 double home=0.0;
@@ -75,8 +97,13 @@ double away=0.0;
 			
 		}
 	}
-	
-System.out.println(history.getJogo().toString());
+	Algoritmo a = new Algoritmo();
+	a.setHistory(history);
+	a.setProbCasa(home);
+	a.setProbx(tie);
+	a.setProbFora(away);
+	return a;
+/*System.out.println(history.getJogo().toString());
 System.out.println("PROB CASA");
 System.out.println(home*100);
 System.out.println(1/history.getJogo().getOdds1()*100);
@@ -92,7 +119,7 @@ System.out.println(away*100);
 System.out.println(1/history.getJogo().getOdds2()*100);	
 System.out.println("ODDS-> "+history.getJogo().getOdds2());
 
-System.out.println("-------------------------------------------------------------------------------");
+System.out.println("-------------------------------------------------------------------------------");*/
 }
 
 	public  static ArrayList<History> getActualHistory(){
@@ -103,7 +130,8 @@ System.out.println("------------------------------------------------------------
 	         tx = session.beginTransaction();
 	         ArrayList<History> lista= new ArrayList<>();  
 	       
-	         List jogos = session.createQuery("FROM Jogos where estado = 'APOST' and datareal> now() ").list(); 
+	         @SuppressWarnings("rawtypes")
+			List jogos = session.createQuery("FROM Jogos where estado = 'APOST' and datareal> now() ").list(); 
 for (Object object : jogos) {
 	lista.add(new History((Jogos) object));
 	
@@ -119,7 +147,7 @@ return lista;
 	 }
 		
 	public static void main(String[] args) {
-		new Algoritmo().run();
+	//	new Algoritmo().run();
 	/*
 		double casa = 1.429;
 		double fora = 1.022;
@@ -149,6 +177,30 @@ return lista;
 	        
 	      }
 		 return fact;
+	}
+	public History getHistory() {
+		return history;
+	}
+	public void setHistory(History history) {
+		this.history = history;
+	}
+	public double getProbCasa() {
+		return probCasa;
+	}
+	public void setProbCasa(double probCasa) {
+		this.probCasa = probCasa;
+	}
+	public double getProbx() {
+		return probx;
+	}
+	public void setProbx(double probx) {
+		this.probx = probx;
+	}
+	public double getProbFora() {
+		return probFora;
+	}
+	public void setProbFora(double probFora) {
+		this.probFora = probFora;
 	}
 	
 }

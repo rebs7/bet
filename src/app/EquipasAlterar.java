@@ -1,37 +1,35 @@
 package app;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import main.entities.Equipas;
-import main.utils.Utils;
-
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import main.entities.Equipas;
+import main.utils.Utils;
 
 public class EquipasAlterar extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static EquipasAlterar frame;
 	private JTextField searchField;
@@ -116,7 +114,7 @@ public class EquipasAlterar extends JFrame {
 		
 		
 	};
-			
+		frame.dispose();	
 			}
 		});
 		changeButton.setBounds(978, 153, 108, 29);
@@ -155,7 +153,99 @@ public class EquipasAlterar extends JFrame {
 		srchbutton.setBounds(376, 156, 89, 23);
 		contentPane.add(srchbutton);
 		
+		JButton btnValidar = new JButton("Validar");
+		btnValidar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(		JOptionPane.showConfirmDialog(null, "Deseja validar a equipa " + nome)==JOptionPane.OK_OPTION){
+					
+					try {
+						String sql ="";
+						Connection conn = null;
+						PreparedStatement stmt = null;
+						Class.forName(Utils.JDBC_DRIVER);
+						conn = DriverManager.getConnection(Utils.DB_URL, Utils.USER, Utils.PASS);
+						
+						
+						
+						sql = "UPDATE  equipas SET valido='SIM',daltera= now(),user='MAN' where nome=?";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, nome);
+						
+					stmt.executeUpdate();
+					
+						conn.close();
+						
+
+					} catch (Exception s) {
+						s.printStackTrace();
+					}
+					
+					
+					
+				};
+						
+			frame.dispose();		
+				
+			}
+		});
+		btnValidar.setBounds(988, 203, 89, 23);
+		contentPane.add(btnValidar);
+		
+		JButton button = new JButton("Validar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+	if(		JOptionPane.showConfirmDialog(null, "Deseja eliminar a equipa " + nome)==JOptionPane.OK_OPTION){
+					
+					try {
+						String sql ="";
+						Connection conn = null;
+						PreparedStatement stmt = null;
+						Class.forName(Utils.JDBC_DRIVER);
+						conn = DriverManager.getConnection(Utils.DB_URL, Utils.USER, Utils.PASS);
+						
+						
+						
+						sql = "Delete from equipas where nome=?";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, nome);
+						
+					stmt.executeUpdate();
+					
+					sql = "Delete from jogos where casa=? or fora=?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, nome);
+					stmt.setString(2, nome);
+					
+				stmt.executeUpdate();
+					
+						conn.close();
+						
+
+					} catch (Exception s) {
+						s.printStackTrace();
+					}
+					
+					
+					
+				};
+						
+			frame.dispose();		
+			}
+		});
+		button.setBounds(988, 262, 89, 23);
+		contentPane.add(button);
+		
 			
 		
+	}
+
+
+	public static EquipasAlterar getFrame() {
+		return frame;
+	}
+
+
+	public static void setFrame(EquipasAlterar frame) {
+		EquipasAlterar.frame = frame;
 	}
 }

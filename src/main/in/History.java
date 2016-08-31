@@ -1,3 +1,4 @@
+package main.in;
 import java.sql.*;
 
 import main.entities.Jogos;

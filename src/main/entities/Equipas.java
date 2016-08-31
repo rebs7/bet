@@ -19,6 +19,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.jsoup.select.Evaluator.IsEmpty;
 
 import main.utils.HibernateUtil;
 import main.utils.Utils;
@@ -171,6 +172,48 @@ return  equipas;
 			Class.forName(Utils.JDBC_DRIVER);
 			conn = DriverManager.getConnection(Utils.DB_URL, Utils.USER, Utils.PASS);
 			sql = "select * from equipas";
+			stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+			Equipas a = new Equipas();
+			a.setNome(rs.getString("nome"));
+			a.setPais(rs.getString("pais"));
+			a.setUser(rs.getString("user"));
+			a.setDaltera(rs.getDate("daltera"));
+			a.setDcria(rs.getDate("dcria"));
+			a.setValido(rs.getString("valido"));
+			list.add(a);
+				
+			}
+		return list;	
+		}catch (Exception e) {
+			return null;	
+			}
+			}
+	 public static List <Equipas> search(String nome, String pais, String user, String valido){
+		try {
+			ArrayList<Equipas> list = new ArrayList<>();
+			String sql ="";
+			
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			Class.forName(Utils.JDBC_DRIVER);
+			conn = DriverManager.getConnection(Utils.DB_URL, Utils.USER, Utils.PASS);
+			sql = "select * from equipas where ";
+			if(nome != null && !nome.isEmpty()){
+				sql+="nome= '"+nome +"' and ";
+			}
+			if(pais != null && !pais.isEmpty()){
+				sql+="pais= '"+pais +"' and ";
+			}
+			if(user != null && !user.isEmpty()){
+				sql+="user= '"+user +"' and ";
+			}
+			if(valido != null && !valido.isEmpty()){
+				sql+="valido= '"+valido +"' and ";
+			}
+			sql+= " 1=1";
 			stmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = stmt.executeQuery();

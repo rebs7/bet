@@ -6,6 +6,15 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import main.in.Algoritmo;
+import main.in.FootballCSV;
+import main.in.ZeroZeroLastResults;
+import main.in.ZeroZeroNextGames;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Home extends JFrame {
 
 
@@ -29,26 +38,67 @@ public class Home extends JFrame {
 	 * Create the frame.
 	 */
 	public Home() {
+		getContentPane().setLayout(null);
+		setBounds(100, 100, 1600, 900);
+		JButton btnNewButton = new JButton("Run Next Games");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				(new Thread(new ZeroZeroNextGames())).start();
+			}
+		});
+		btnNewButton.setBounds(125, 101, 211, 23);
+		getContentPane().add(btnNewButton);
 		
-		  String[] columns = new String[] {
-		            "Id", "Name", "Hourly Rate", "Part Time"
-		        };
-		         
-		        //actual data for the table in a 2d array
-		        Object[][] data = new Object[][] {
-		            {1, "John", 40.0, false },
-		            {2, "Rambo", 70.0, false },
-		            {3, "Zorro", 60.0, true },
-		        };
+		JButton btnRunPreviousGames = new JButton("Run Previous Games");
+		btnRunPreviousGames.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				(new Thread(new ZeroZeroLastResults())).start();
+			}
+		});
+		btnRunPreviousGames.setBounds(125, 150, 211, 23);
+		getContentPane().add(btnRunPreviousGames);
+		
+		JButton button = new JButton("Run CSV");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				(new Thread(new FootballCSV())).start();
+			}
+		});
+		button.setBounds(125, 202, 211, 23);
+		getContentPane().add(button);
+		
+		JButton btnJogos = new JButton("Jogos");
+		btnJogos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JogosFrame  teste =new JogosFrame();
+				teste.setVisible(true);
+			}
+		});
+		btnJogos.setBounds(547, 101, 89, 23);
+		getContentPane().add(btnJogos);
+		
+		JButton btnEquipas = new JButton("Equipas");
+		btnEquipas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Teste  teste =new Teste();
+				teste.setVisible(true);
+			
+			}
+		});
+		btnEquipas.setBounds(547, 150, 89, 23);
+		getContentPane().add(btnEquipas);
+		
+		JButton button_1 = new JButton("Apostas");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AlgoritmoFrame  teste =new AlgoritmoFrame();
+				teste.setVisible(true);
+			}
+		});
+		button_1.setBounds(547, 202, 89, 23);
+		getContentPane().add(button_1);
+		
 		 
-		        //create table with data
-		       JTable table = new JTable(data, columns);
-		         
-		        //add the table to the frame
-		       getContentPane().add(new JScrollPane(table));
-		         
-		        this.setTitle("Table Example");
-		        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
 		       		
 	
 		

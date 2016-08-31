@@ -1,38 +1,36 @@
 package app;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import main.entities.Equipas;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import main.entities.Equipas;
+import main.utils.Utils;
 
 public class Teste extends JFrame {
 
@@ -40,7 +38,6 @@ public class Teste extends JFrame {
 	 private JTable table;
 	 static Teste frame;
      DefaultTableModel model;
-     private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -64,9 +61,10 @@ public class Teste extends JFrame {
 
 		
 		        
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1600, 900);
 		         getContentPane().setLayout(null);
+		         JComboBox<String> comboBox_1 = new JComboBox<String>();
 		          model = new DefaultTableModel(getTableData(Equipas.listAll()), getTableHeaders());
 		        table = new JTable(model );
 		        table.getColumn("ACCAO").setCellRenderer(new ButtonRenderer());
@@ -77,21 +75,13 @@ public class Teste extends JFrame {
 		        scrollPane.setBounds(10, 121, 1564, 731);
 		        getContentPane().add(scrollPane);
 		        
-		        JLabel lblNome = new JLabel("Nome");
-		        lblNome.setBounds(57, 54, 46, 14);
-		        getContentPane().add(lblNome);
-		        
-		        textField = new JTextField();
-		        textField.setBounds(166, 51, 113, 20);
-		        getContentPane().add(textField);
-		        textField.setColumns(10);
-		        
 		        JLabel lblVlido = new JLabel("V\u00E1lido");
 		        lblVlido.setBounds(370, 54, 46, 14);
 		        getContentPane().add(lblVlido);
 		        
-		        JComboBox comboBox = new JComboBox();
+		        JComboBox<String> comboBox = new JComboBox<String>();
 		        comboBox.setBounds(438, 51, 103, 20);
+		        comboBox.addItem("");
 		        comboBox.addItem("SIM");
 		        comboBox.addItem("NAO");
 		        getContentPane().add(comboBox);
@@ -100,18 +90,52 @@ public class Teste extends JFrame {
 		        btnPesquisar.addActionListener(new ActionListener() {
 		        	public void actionPerformed(ActionEvent e) {
 		        		
-		        		  model = new DefaultTableModel(getTableData(Equipas.getAll()), getTableHeaders());
+		        	/*	  model = new DefaultTableModel(getTableData(Equipas.getAll()), getTableHeaders());
 		        		  model.fireTableDataChanged();
 		        	      table.setModel(model);
 		        	      table.getColumn("ACCAO").setCellRenderer(new ButtonRenderer());
 		        		     
 		        	      table.getColumn("ACCAO").setCellEditor(new ButtonEditor(new JCheckBox()));
-		        	  
+		        	      */
+		        		
+		        		model = new DefaultTableModel(getTableData(Equipas.search(null, null,(String) comboBox_1.getSelectedItem(), (String)comboBox.getSelectedItem())), getTableHeaders());
+		        		  model.fireTableDataChanged();
+		        	      table.setModel(model);
+		        	      table.getColumn("ACCAO").setCellRenderer(new ButtonRenderer());
+		        		     
+		        	      table.getColumn("ACCAO").setCellEditor(new ButtonEditor(new JCheckBox()));
 		        		
 		        	}
 		        });
 		        btnPesquisar.setBounds(1088, 50, 89, 23);
 		        getContentPane().add(btnPesquisar);
+		        
+		        JLabel lblUser = new JLabel("User");
+		        lblUser.setBounds(30, 54, 46, 14);
+		        getContentPane().add(lblUser);
+		        
+		      
+		        try {
+					String sql ="";
+					Connection conn = null;
+					PreparedStatement stmt = null;
+					Class.forName(Utils.JDBC_DRIVER);
+					conn = DriverManager.getConnection(Utils.DB_URL, Utils.USER, Utils.PASS);
+					sql = "select distinct(user) from equipas";
+					stmt = conn.prepareStatement(sql);
+					comboBox_1.addItem("");
+					ResultSet rs = stmt.executeQuery();
+					while (rs.next()) {
+					
+						comboBox_1.addItem(rs.getString("user"));
+				
+						
+					}
+					
+				}catch (Exception e) {
+				}
+		        comboBox_1.setBounds(104, 51, 103, 20);
+		        getContentPane().add(comboBox_1);
 		        
 		      
 	}
@@ -193,6 +217,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 		        	 
 		        }
 		        EquipasAlterar frame = new EquipasAlterar(a);
+		        frame.setFrame(frame);
 	  			frame.setVisible(true);
 
 

@@ -33,13 +33,13 @@ public class FootballCSV implements Runnable {
 			String baseUrl = "http://www.football-data.co.uk/mmz4281/#####/data.zip";
 			File folder = new File(folderText);
 
-			for (int StartSeason = 2013; StartSeason < 2014; StartSeason++) {
+			for (int StartSeason = 2000; StartSeason < 2017; StartSeason++) {
 
 				int endSeason = StartSeason + 1;
 				String season = Integer.toString(StartSeason).substring(2) + Integer.toString(endSeason).substring(2);
 
 			//	System.out.println(season);
-			//	this.unpackArchive(new URL(baseUrl.replace("#####", season)), folder, season);
+		//		this.unpackArchive(new URL(baseUrl.replace("#####", season)), folder, season);
 
 			}
 			parseCSV(folderText, this.listFilesForFolder(folder));
@@ -79,7 +79,7 @@ public class FootballCSV implements Runnable {
 			throw new IOException("Could not create directory: " + targetDir);
 		}
 		ZipFile zipFile = new ZipFile(theFile);
-		for (Enumeration entries = zipFile.entries(); entries.hasMoreElements();) {
+		for (Enumeration<?> entries = zipFile.entries(); entries.hasMoreElements();) {
 			ZipEntry entry = (ZipEntry) entries.nextElement();
 			File file = new File(targetDir, File.separator + season + "__" + entry.getName());
 			if (!buildDirectory(file.getParentFile())) {
