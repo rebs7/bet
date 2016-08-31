@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,6 +41,7 @@ public class JogosFrame extends JFrame {
 	 private JLabel lblEstado;
 	 private JComboBox<String> comboBox_2;
 	 private JButton btnPesquisar;
+	 private JTextArea text;
 
 	/**
 	 * Launch the application.
@@ -48,7 +50,7 @@ public class JogosFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JogosFrame frame = new JogosFrame();
+					JogosFrame frame = new JogosFrame(new JTextArea());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +62,7 @@ public class JogosFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JogosFrame() {
+	public JogosFrame(JTextArea text) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1600, 900);
 		         getContentPane().setLayout(null);

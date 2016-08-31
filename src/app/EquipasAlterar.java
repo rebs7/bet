@@ -191,7 +191,7 @@ public class EquipasAlterar extends JFrame {
 		btnValidar.setBounds(988, 203, 89, 23);
 		contentPane.add(btnValidar);
 		
-		JButton button = new JButton("Validar");
+		JButton button = new JButton("Eliminar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 	if(		JOptionPane.showConfirmDialog(null, "Deseja eliminar a equipa " + nome)==JOptionPane.OK_OPTION){
